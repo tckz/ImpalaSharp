@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{42D90228-E93C-46A3-90C7-80146623FE67}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImpalaSharp</RootNamespace>
+    <AssemblyName>ImpalaSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Thrift, Version=0.9.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Thrift.0.9.1.3\lib\net35\Thrift.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SimpleResultHandler.cs" />
+    <Compile Include="Disposer.cs" />
+    <Compile Include="QueryResult.cs" />
+    <Compile Include="ImpalaClient.cs" />
+    <Compile Include="QueryHandleWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultHandler.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\BeeswaxException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\BeeswaxService.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\ConfigVariable.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\Query.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\QueryExplanation.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\QueryHandle.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\QueryNotFoundException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\QueryState.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\Results.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Beeswax\ResultsMetadata.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\cli_service.Constants.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\fb303\FacebookService.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\fb303\fb_status.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\AlreadyExistsException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\BinaryColumnStatsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\BooleanColumnStatsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ColumnStatistics.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ColumnStatisticsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ColumnStatisticsDesc.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ColumnStatisticsObj.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ConfigValSecurityException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Database.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\DoubleColumnStatsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\EnvironmentContext.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\FieldSchema.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\HiveObjectPrivilege.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\HiveObjectRef.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\HiveObjectType.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\hive_metastore.Constants.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Index.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\IndexAlreadyExistsException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\InvalidInputException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\InvalidObjectException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\InvalidOperationException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\InvalidPartitionException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\LongColumnStatsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\MetaException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\NoSuchObjectException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Order.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Partition.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\PartitionEventType.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\PrincipalPrivilegeSet.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\PrincipalType.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\PrivilegeBag.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\PrivilegeGrantInfo.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Role.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Schema.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\SerDeInfo.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\SkewedInfo.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\StorageDescriptor.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\StringColumnStatsData.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Table.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\ThriftHiveMetastore.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Type.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\UnknownDBException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\UnknownPartitionException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\UnknownTableException.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Hive\Version.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\ImpalaHiveServer2Service.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\ImpalaService.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TImpalaQueryOptions.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TInsertResult.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TPingImpalaServiceResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TResetTableReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TStatus.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\Impala\TStatusCode.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TArrayTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TBoolValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TByteValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCancelOperationReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCancelOperationResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCLIService.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCloseOperationReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCloseOperationResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCloseSessionReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TCloseSessionResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TColumn.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TColumnDesc.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TColumnValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TDoubleValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TExecuteStatementReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TExecuteStatementResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TFetchOrientation.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TFetchResultsReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TFetchResultsResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetCatalogsReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetCatalogsResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetColumnsReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetColumnsResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetFunctionsReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetFunctionsResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetInfoReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetInfoResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetInfoType.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetInfoValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetLogReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetLogResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetOperationStatusReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetOperationStatusResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetResultSetMetadataReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetResultSetMetadataResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetSchemasReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetSchemasResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTablesReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTablesResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTableTypesReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTableTypesResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTypeInfoReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TGetTypeInfoResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\THandleIdentifier.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TI16Value.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TI32Value.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TI64Value.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TMapTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TOpenSessionReq.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TOpenSessionResp.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TOperationHandle.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TOperationState.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TOperationType.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TPrimitiveTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TProtocolVersion.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TRow.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TRowSet.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TSessionHandle.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TStatus.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TStatusCode.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TStringValue.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TStructTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TTableSchema.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TTypeDesc.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TTypeId.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TUnionTypeEntry.cs" />
+    <Compile Include="thrift\gen-csharp\ImpalaSharp\Thrift\TUserDefinedTypeEntry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

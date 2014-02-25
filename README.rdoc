@@ -1,0 +1,36 @@
+= Impala client for C#
+
+
+== Source
+
+https://github.com/tckz/ImpalaSharp
+
+== Example
+
+See 'MyImpala' sample project.
+
+
+== Requirement
+
+* Visual Studio 2012 or later (compilation)
+* NuGet (compilation)
+  * Allow the NuGet to download the required packages.
+* .net Framework 4.0 (runtime)
+  * Full. is not a client profile.
+
+
+== License
+
+This softtware is licensed under the APL2.0.  See LICENSE.txt for details.
+
+
+== My environment
+
+* Windows 7 Professional x64
+* Visual Studio 2012 Professional
+  * NuGet 2.8.50126.400
+* Thrift 1.9.1.3
+* Impala v1.2.0-cdh5.0.0-beta-1
+
+
+

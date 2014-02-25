@@ -1,0 +1,23 @@
+Modification point from the original IDL.
+
+ o Add namespace declaration for ImpalaSharp.
+ o For avoiding compilation error about C#'s specification.
+   C# prohibit to use same identifier between class name and its property name.
+   
+     e.g.) Query class that is generated from beeswax.thrift
+
+     public partial class Query : TBase
+     {
+        public string Query {get;set;} // <- Can't declare this.
+        
+        -- snip --
+     }
+
+ o Modified files are below.
+   ./impala/beeswax.thrift
+   ./impala/cli_service.thrift
+   ./impala/ImpalaService.thrift
+   ./impala/Status.thrift
+   ./hive_metastore.thrift
+   ./fb303.thrift
+
