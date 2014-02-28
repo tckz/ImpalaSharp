@@ -57,7 +57,12 @@ namespace ImpalaSharp
         /// <returns></returns>
         public QueryResult<List<Dictionary<string, object>>> Query(string q)
         {
-            var ret = this.Query(q, new SimpleResultHandler());
+            return this.Query(q, new Dictionary<string, string>());
+        }
+
+        public QueryResult<List<Dictionary<string, object>>> Query(string q, Dictionary<string, string> conf)
+        {
+            var ret = this.Query(q, conf, new SimpleResultHandler());
             return ret;
         }
 
@@ -68,13 +73,20 @@ namespace ImpalaSharp
         /// <param name="q"></param>
         /// <param name="handler"></param>
         /// <returns></returns>
-        public QueryResult<T> Query<T>(string q, ResultHandler<T> handler)
+        public QueryResult<T> Query<T>(string q, Dictionary<string, string>conf, ResultHandler<T> handler)
         {
-            var ret = this.Query(q,
+            var ret = this.Query(q, conf,
                 (metadata) => handler.GetResult(metadata),
                 (metadata, results, result) => handler.HandleResult(metadata, results, result)
             );
 
+            return ret;
+        }
+
+
+        public List<ConfigVariable> GetDefaultConfiguration(bool includeHadoop)
+        {
+            var ret =  this.service.get_default_configuration(false);
             return ret;
         }
 
@@ -98,52 +110,58 @@ namespace ImpalaSharp
         /// <param name="createResult">Function to instantiate the result object which is a member of QueryResult.</param>
         /// <param name="handleResults">Function to handle each Beeswax.Results and pack them into the result object.</param>
         /// <returns></returns>
-        public QueryResult<T> Query<T>(string q, Func<ResultsMetadata, T> createResult, Action<ResultsMetadata, Results, T> handleResults)
+        public QueryResult<T> Query<T>(string q, Dictionary<string, string>conf, Func<ResultsMetadata, T> createResult, Action<ResultsMetadata, Results, T> handleResults)
+        {
+            try
+            {
+                return this.QueryInternal(q, conf, createResult, handleResults);
+            }
+            catch (BeeswaxException ex)
+            {
+                throw new ImpalaException(ex.Message, ex);
+            }
+        }
+
+        private QueryResult<T> QueryInternal<T>(string q, Dictionary<string, string>conf, Func<ResultsMetadata, T> createResult, Action<ResultsMetadata, Results, T> handleResults)
         {
             var sw = new Stopwatch();
             sw.Start();
 
-            using (var qh = this.CreateQueryHandle(q))
+            using (var qh = this.CreateQueryHandle(q, conf))
+            using (var cleaning = new DisposableAction(() => { this.currentQuery = null; }))
             {
-                try
+                this.currentQuery = qh;
+
+                this.WaitQueryStateFinished(qh);
+
+                var metadata = this.service.get_results_metadata(qh);
+
+                var result = new QueryResult<T>();
+                result.Result = createResult(metadata);
+                var firstResponse = true;
+                for (; ; )
                 {
-                    this.currentQuery = qh;
-
-                    this.WaitQueryStateFinished(qh);
-
-                    var metadata = this.service.get_results_metadata(qh);
-
-                    var result = new QueryResult<T>();
-                    result.Result = createResult(metadata);
-                    var firstResponse = true;
-                    for (; ; )
+                    var results = this.service.fetch(qh, false, 1024);
+                    if (firstResponse)
                     {
-                        var results = this.service.fetch(qh, false, 1024);
-                        if (firstResponse)
-                        {
-                            result.QueryTime = sw.Elapsed;
-                            firstResponse = false;
-                        }
-
-                        handleResults(metadata, results, result.Result);
-
-                        if (!results.Has_more)
-                        {
-                            break;
-                        }
+                        result.QueryTime = sw.Elapsed;
+                        firstResponse = false;
                     }
 
-                    var profile = this.service.GetRuntimeProfile(qh);
-                    result.RuntimeProfile = profile;
+                    handleResults(metadata, results, result.Result);
 
-                    result.ElapsedTime = sw.Elapsed;
+                    if (!results.Has_more)
+                    {
+                        break;
+                    }
+                }
 
-                    return result;
-                }
-                finally
-                {
-                    this.currentQuery = null;
-                }
+                var profile = this.service.GetRuntimeProfile(qh);
+                result.RuntimeProfile = profile;
+
+                result.ElapsedTime = sw.Elapsed;
+
+                return result;
             }
 
         }
@@ -160,7 +178,7 @@ namespace ImpalaSharp
                 else if (state == QueryState.EXCEPTION)
                 {
                     var log = this.service.get_log(qh.Handle.Log_context);
-                    throw new TException("Error: " + log);
+                    throw new ImpalaException(log);
                 }
                 Thread.Sleep(100);
             }
@@ -182,10 +200,11 @@ namespace ImpalaSharp
             this.disposer.Add(this.service);
         }
 
-        private QueryHandleWrapper CreateQueryHandle(string q)
+        private QueryHandleWrapper CreateQueryHandle(string q, Dictionary<string, string>conf)
         {
             var query = new Query();
             query.Query_string = q;
+            query.Configuration = conf.Select(e => e.Key + "=" + e.Value).ToList();
             var qh = this.service.query(query);
             return new QueryHandleWrapper(this.service, qh);
         }

@@ -52,6 +52,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisposableAction.cs" />
+    <Compile Include="ImpalaException.cs" />
     <Compile Include="SimpleResultHandler.cs" />
     <Compile Include="Disposer.cs" />
     <Compile Include="QueryResult.cs" />

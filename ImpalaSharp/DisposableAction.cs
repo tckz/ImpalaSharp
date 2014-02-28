@@ -17,33 +17,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ImpalaSharp
 {
-    internal class Disposer : IDisposable
+    internal class DisposableAction : IDisposable
     {
-        private readonly Stack<IDisposable> toBeDisposed;
+        private readonly Action actionPerformedOnDispose;
 
-        public Disposer()
+        public DisposableAction(Action action)
         {
-            this.toBeDisposed = new Stack<IDisposable>();
-        }
-
-        public void Add(IDisposable e)
-        {
-            this.toBeDisposed.Push(e);
+            this.actionPerformedOnDispose = action;
         }
 
         #region IDisposable member
 
         public void Dispose()
         {
-            while (this.toBeDisposed.Count > 0)
-            {
-                var e = this.toBeDisposed.Pop();
-                e.Dispose();
-            }
+            this.actionPerformedOnDispose();
         }
 
         #endregion

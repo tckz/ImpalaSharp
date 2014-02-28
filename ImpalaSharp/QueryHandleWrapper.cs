@@ -56,13 +56,20 @@ namespace ImpalaSharp
         }
 
 
-        #region IDisposable メンバー
+        #region IDisposable member
 
         void IDisposable.Dispose()
         {
             lock (this)
             {
-                this.service.close(this.queryHandle);
+                try
+                {
+                    this.service.close(this.queryHandle);
+                }
+                catch
+                {
+                    // ignore
+                }
             }
             this.queryHandle = null;
             this.service = null;

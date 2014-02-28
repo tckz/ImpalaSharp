@@ -17,35 +17,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+using ImpalaSharp.Thrift.Beeswax;
 
 namespace ImpalaSharp
 {
-    internal class Disposer : IDisposable
+    public class ImpalaException : Exception
     {
-        private readonly Stack<IDisposable> toBeDisposed;
+        public string SQLState { get; private set; }
+        public int ErrorCode { get; private set; }
 
-        public Disposer()
+
+        public ImpalaException(string mes)
+            : base(mes)
         {
-            this.toBeDisposed = new Stack<IDisposable>();
         }
 
-        public void Add(IDisposable e)
+        public ImpalaException(string mes, Exception innerException)
+            : base(mes, innerException)
         {
-            this.toBeDisposed.Push(e);
         }
 
-        #region IDisposable member
-
-        public void Dispose()
+        public ImpalaException(string mes, BeeswaxException innerException)
+            : base(mes, innerException)
         {
-            while (this.toBeDisposed.Count > 0)
-            {
-                var e = this.toBeDisposed.Pop();
-                e.Dispose();
-            }
+            this.SQLState = innerException.SQLState;
+            this.ErrorCode = innerException.ErrorCode;
         }
-
-        #endregion
     }
 }
