@@ -101,9 +101,14 @@ namespace ImpalaSharp
 
         public TStatus Cancel()
         {
-            if (currentQuery != null)
+            var qh = this.currentQuery;
+            if (qh != null)
             {
-                return this.currentQuery.Cancel();
+                using (var anotherConnection = ImpalaClient.Connect(this.ConnectionParameter))
+                {
+                    var ret = anotherConnection.service.Cancel(qh);
+                    return ret;
+                }
             }
 
             return null;
