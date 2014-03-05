@@ -23,19 +23,19 @@ using ImpalaSharp.Thrift.Beeswax;
 
 namespace ImpalaSharp
 {
-    internal class SimpleResultHandler : ResultHandler<List<Dictionary<string, object>>>
+    internal class SimpleResultHandler : ResultHandler<List<Dictionary<string, string>>>
     {
 
-        public List<Dictionary<string, object>> GetResult(ResultsMetadata metadata)
+        public List<Dictionary<string, string>> GetResult(ResultsMetadata metadata)
         {
-            return new List<Dictionary<string, object>>();
+            return new List<Dictionary<string, string>>();
         }
 
-        public void HandleResult(ResultsMetadata metadata, Results results, List<Dictionary<string, object>> result)
+        public void HandleResult(ResultsMetadata metadata, Results results, List<Dictionary<string, string>> result)
         {
             var rows = results.Data.Select(e =>
             {
-                var dic = new Dictionary<string, object>();
+                var dic = new Dictionary<string, string>();
                 var fields = e.Split(metadata.Delim[0]);
 
                 for (var i = 0; i < fields.Length; i++)

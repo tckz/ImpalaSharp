@@ -55,12 +55,18 @@ namespace ImpalaSharp
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
-        public QueryResult<List<Dictionary<string, object>>> Query(string q)
+        public QueryResult<List<Dictionary<string, string>>> Query(string q)
         {
             return this.Query(q, new Dictionary<string, string>());
         }
 
-        public QueryResult<List<Dictionary<string, object>>> Query(string q, Dictionary<string, string> conf)
+        /// <summary>
+        /// Run query with its configuration and handle results using SimpleResultHandler().
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="conf">Query configuration like {Key="mem_limit", Value="-1"}</param>
+        /// <returns></returns>
+        public QueryResult<List<Dictionary<string, string>>> Query(string q, Dictionary<string, string> conf)
         {
             var ret = this.Query(q, conf, new SimpleResultHandler());
             return ret;
