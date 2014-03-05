@@ -38,7 +38,7 @@ namespace ImpalaSharp
         public T Result { get; set; }
 
         /// <summary>
-        /// Elapsed time from before run query to finished fetching.
+        /// Elapsed time from before run query to finished querying.
         /// </summary>
         public TimeSpan ElapsedTime { get; set; }
 

@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ImpalaSharp")]
-[assembly: AssemblyDescription("Impala client for C#")]
+[assembly: AssemblyDescription("Impala client for .NET written in C#")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ImpalaSharp")]

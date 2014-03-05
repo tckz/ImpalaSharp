@@ -65,7 +65,7 @@ namespace ImpalaSharp
         }
 
         /// <summary>
-        /// Run query and handle results with SimpleResultHandler().
+        /// Run query and handle results using SimpleResultHandler().
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
@@ -103,7 +103,11 @@ namespace ImpalaSharp
             return ret;
         }
 
-
+        /// <summary>
+        /// Get default configuration parameter list from the server.
+        /// </summary>
+        /// <param name="includeHadoop"></param>
+        /// <returns></returns>
         public List<ConfigVariable> GetDefaultConfiguration(bool includeHadoop)
         {
             var ret =  this.service.get_default_configuration(false);
@@ -147,6 +151,15 @@ namespace ImpalaSharp
             }
         }
 
+        /// <summary>
+        /// Cast query and get results.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="q"></param>
+        /// <param name="conf"></param>
+        /// <param name="createResult"></param>
+        /// <param name="handleResults"></param>
+        /// <returns></returns>
         private QueryResult<T> QueryInternal<T>(string q, Dictionary<string, string>conf, Func<ResultsMetadata, T> createResult, Action<ResultsMetadata, Results, T> handleResults)
         {
             var sw = Stopwatch.StartNew();
@@ -249,6 +262,13 @@ namespace ImpalaSharp
             this.ServerVersion = pingResult.Version;
         }
 
+
+        /// <summary>
+        /// Create QueryHandle with query string and query configuration.
+        /// </summary>
+        /// <param name="q">Query string.</param>
+        /// <param name="conf">Query configuration like {Key="mem_limit", Value="-1"}</param>
+        /// <returns></returns>
         private QueryHandleWrapper CreateQueryHandle(string q, Dictionary<string, string>conf)
         {
             var query = new Query();
@@ -299,7 +319,7 @@ namespace ImpalaSharp
 
 
 
-        #region IDisposable メンバー
+        #region IDisposable member
 
         public void Dispose()
         {
