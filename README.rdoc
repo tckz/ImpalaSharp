@@ -27,7 +27,7 @@ This softtware is licensed under the APL2.0.  See LICENSE.txt for details.
 == My environment
 
 * Windows 7 Professional x64
-* Visual Studio 2012 Professional
+* Visual Studio 2012 Professional Update 4
   * NuGet 2.8.50126.400
 * Thrift 0.9.1.3
 * Impala v1.2.0-cdh5.0.0-beta-1
