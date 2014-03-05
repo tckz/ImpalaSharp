@@ -36,6 +36,7 @@ namespace ImpalaSharp
     /// </summary>
     public class ImpalaClient : IDisposable
     {
+        public string ServerVersion { get; private set; }
         public string Host { get; private set; }
         public int Port { get; private set; }
 
@@ -224,6 +225,10 @@ namespace ImpalaSharp
 
             this.service = new ImpalaService.Client(protocol);
             this.disposer.Add(this.service);
+
+
+            var pingResult = this.service.PingImpalaService();
+            this.ServerVersion = pingResult.Version;
         }
 
         private QueryHandleWrapper CreateQueryHandle(string q, Dictionary<string, string>conf)
