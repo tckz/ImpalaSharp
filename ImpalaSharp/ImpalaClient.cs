@@ -47,6 +47,8 @@ namespace ImpalaSharp
             }
         }
 
+        public int FetchSize { get; set; }
+
         private readonly Disposer disposer = new Disposer();
 
         private TTransport transport = null;
@@ -59,6 +61,7 @@ namespace ImpalaSharp
         private ImpalaClient(ConnectionParameter param)
         {
             this.connectionParameter = param;
+            this.FetchSize = 1024;
         }
 
         /// <summary>
@@ -162,7 +165,7 @@ namespace ImpalaSharp
                 var firstResponse = true;
                 for (; ; )
                 {
-                    var results = this.service.fetch(qh, false, 1024);
+                    var results = this.service.fetch(qh, false, this.FetchSize);
                     if (firstResponse)
                     {
                         result.QueryTime = sw.Elapsed;
