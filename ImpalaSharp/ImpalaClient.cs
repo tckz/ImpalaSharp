@@ -130,15 +130,14 @@ namespace ImpalaSharp
 
         private QueryResult<T> QueryInternal<T>(string q, Dictionary<string, string>conf, Func<ResultsMetadata, T> createResult, Action<ResultsMetadata, Results, T> handleResults)
         {
-            var sw = new Stopwatch();
-            sw.Start();
+            var sw = Stopwatch.StartNew();
 
             using (var qh = this.CreateQueryHandle(q, conf))
             using (var cleaning = new DisposableAction(() => { this.currentQuery = null; }))
             {
                 this.currentQuery = qh;
 
-                this.WaitQueryStateFinished(qh);
+                this.WaitQueryStateFinished(qh, sw);
 
                 var metadata = this.service.get_results_metadata(qh);
 
@@ -169,10 +168,16 @@ namespace ImpalaSharp
 
                 return result;
             }
-
         }
 
-        private void WaitQueryStateFinished(QueryHandleWrapper qh)
+        /// <summary>
+        /// Wait until query state became FINISHED.
+        /// 
+        /// If the state became EXCEPTION throw exception.
+        /// </summary>
+        /// <param name="qh">QueryHandle to wait</param>
+        /// <param name="sw">StopWatch to get elapsed time since the query starts.</param>
+        private void WaitQueryStateFinished(QueryHandleWrapper qh, Stopwatch sw)
         {
             for (; ; )
             {
@@ -184,15 +189,30 @@ namespace ImpalaSharp
                 else if (state == QueryState.EXCEPTION)
                 {
                     var log = this.service.get_log(qh.Handle.Log_context);
-                    throw new ImpalaException(log);
+                    throw new ImpalaException("Query aborted: " + log);
                 }
-                Thread.Sleep(100);
+
+                var msec = 1000;
+                var elapsed = sw.ElapsedMilliseconds;
+                if (elapsed < 10 * 1000)
+                {
+                    msec = 100;
+                }
+                else if (elapsed < 60 * 1000)
+                {
+                    msec = 500;
+                }
+
+                Thread.Sleep(msec);
             }
         }
 
+        /// <summary>
+        /// Connect to impalad and construct ImpalaService.Client.
+        /// </summary>
         protected void Connect()
         {
-            var socket = new TSocket(this.Host, this.Port);
+            var socket = new TSocket(this.ConnectionParameter.Host, this.ConnectionParameter.Port);
             this.disposer.Add(socket);
 
             this.transport = new TBufferedTransport(socket);
