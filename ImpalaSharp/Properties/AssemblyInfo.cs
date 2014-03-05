@@ -18,9 +18,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ImpalaSharp")]
-[assembly: AssemblyDescription("Impala client for .NET written in C#")]
+[assembly: AssemblyDescription("Impala client for .NET")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("tckz")]
 [assembly: AssemblyProduct("ImpalaSharp")]
 [assembly: AssemblyCopyright("Copyright © 2014 tckz")]
 [assembly: AssemblyTrademark("")]
@@ -31,4 +31,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("af61eb15-80e1-4549-8317-1ac4e59a3114")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
