@@ -52,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionParameter.cs" />
     <Compile Include="DisposableAction.cs" />
     <Compile Include="ImpalaException.cs" />
     <Compile Include="SimpleResultHandler.cs" />

@@ -37,18 +37,28 @@ namespace ImpalaSharp
     public class ImpalaClient : IDisposable
     {
         public string ServerVersion { get; private set; }
-        public string Host { get; private set; }
-        public int Port { get; private set; }
+
+        private readonly ConnectionParameter connectionParameter;
+        public ConnectionParameter ConnectionParameter
+        {
+            get
+            {
+                return this.connectionParameter;
+            }
+        }
 
         private readonly Disposer disposer = new Disposer();
 
         private TTransport transport = null;
         private ImpalaService.Client service = null;
 
-        private ImpalaClient(string host, int port)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        private ImpalaClient(ConnectionParameter param)
         {
-            this.Host = host;
-            this.Port = port;
+            this.connectionParameter = param;
         }
 
         /// <summary>
@@ -253,10 +263,35 @@ namespace ImpalaSharp
         /// <returns></returns>
         public static ImpalaClient Connect(string host, int port)
         {
-            var ret = new ImpalaClient(host, port);
-            ret.Connect();
+            var param = new ConnectionParameter()
+            {
+                Host = host,
+                Port = port
+            };
 
-            return ret;
+            return Connect(param);
+        }
+
+        /// <summary>
+        /// Instantiate ImpalaClient and connect it to the impalad.
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static ImpalaClient Connect(ConnectionParameter param)
+        {
+            ImpalaClient client = null;
+            try
+            {
+                client = new ImpalaClient(param);
+                client.Connect();
+
+                return client;
+            }
+            catch
+            {
+                client.Dispose();
+                throw;
+            }
         }
 
 
