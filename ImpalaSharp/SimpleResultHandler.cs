@@ -33,10 +33,11 @@ namespace ImpalaSharp
 
         public void HandleResult(ResultsMetadata metadata, Results results, List<Dictionary<string, string>> result)
         {
+            var splitter = new string[] { metadata.Delim };
             var rows = results.Data.Select(e =>
             {
                 var dic = new Dictionary<string, string>();
-                var fields = e.Split(metadata.Delim[0]);
+                var fields = e.Split(splitter, StringSplitOptions.None);
 
                 for (var i = 0; i < fields.Length; i++)
                 {

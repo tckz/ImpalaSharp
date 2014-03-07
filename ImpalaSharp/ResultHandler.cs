@@ -23,6 +23,10 @@ using ImpalaSharp.Thrift.Beeswax;
 
 namespace ImpalaSharp
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T">Type of QueryResult.Result</typeparam>
     public interface ResultHandler<T>
     {
         /// <summary>
